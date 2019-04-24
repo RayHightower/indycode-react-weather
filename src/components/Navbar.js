@@ -1,14 +1,15 @@
 import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {login, logout} from "../utils/auth";
 import store from "../utils/store";
 
-export default class Navbar extends Component {
+class Navbar extends Component {
   constructor(props) {
     super(props);
 
     this.state = store.getGlobalState();
     this.updateState = this.updateState.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleLogin() {
@@ -17,6 +18,7 @@ export default class Navbar extends Component {
 
   handleLogout() {
     logout();
+    this.props.history.push("/");
   }
 
   componentWillMount() {
@@ -54,3 +56,5 @@ export default class Navbar extends Component {
     )
   }
 }
+
+export default withRouter(Navbar);

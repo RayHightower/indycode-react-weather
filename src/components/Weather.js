@@ -2,21 +2,28 @@ import React, {Component} from "react";
 import Large from "./Weather/Large";
 import Small from "./Weather/Small";
 import {getWeatherData} from "../utils/weatherAPI";
+import store from "../utils/store";
 
 export default class Weather extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      city: {
-        name: "..."
-      },
-      list: []
-    };
+    this.state = store.getGlobalState();
+    getWeatherData();
 
-    getWeatherData().then(data => {
-      this.setState(data);
-    });
+    this.updateState = this.updateState.bind(this);
+  }
+
+  componentWillMount() {
+    store.subscribe(this.updateState);
+  }
+
+  componentWillUnmount() {
+    store.unsubscribe(this.updateState);
+  }
+
+  updateState() {
+    this.setState(store.getGlobalState());
   }
 
   render() {
