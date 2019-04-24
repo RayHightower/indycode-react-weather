@@ -17,8 +17,7 @@ export default class Large extends Component {
   }
 
   render() {
-    let windDirection = {transform: `rotate(${this.state.deg-180}deg)`,
-                         color: "red"};
+    let windDirection = {transform: `rotate(${this.state.deg-180}deg)`};
 
     return(
       <div>
